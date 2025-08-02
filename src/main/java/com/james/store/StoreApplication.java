@@ -8,10 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StoreApplication {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(StoreApplication.class, args);
-		var orderService = context.getBean(OrderService.class);
-		var notifService = context.getBean(NotificationManager.class);
-		orderService.placeOrder();
-		notifService.sendNotification("Hi");
+		SpringApplication.run(StoreApplication.class, args);
 	}
 }
