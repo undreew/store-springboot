@@ -1,9 +1,15 @@
 package com.james.store;
 
+import com.james.store.entities.Address;
+import com.james.store.entities.Profile;
+import com.james.store.entities.Tag;
 import com.james.store.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.LocalDate;
+
 
 @SpringBootApplication
 public class StoreApplication {
@@ -12,5 +18,14 @@ public class StoreApplication {
 //		SpringApplication.run(StoreApplication.class, args);
 		User user = new User(1L, "james", "james@gmail.com", "123123");
 		user.setName("undrew");
+
+		Address address = new Address(2L, "Elmo Street", "City", "Zip", "1");
+		System.out.println(address.getStreet());
+
+		Profile profile = new Profile(1L, "Bio", "09164547960", LocalDate.now(), 100);
+		System.out.println(profile.getLoyaltyPoints());
+
+		Tag tags = new Tag(1L, "human");
+		System.out.println(tags.getName());
 	}
 }
