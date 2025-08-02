@@ -17,15 +17,17 @@ public class StoreApplication {
 	public static void main(String[] args) {
 //		SpringApplication.run(StoreApplication.class, args);
 		User user = new User(1L, "james", "james@gmail.com", "123123");
-		user.setName("undrew");
 
-		Address address = new Address(2L, "Elmo Street", "City", "Zip", "1");
+		Address address = new Address(2L, "Elmo Street", "City", "Zip", user);
 		System.out.println(address.getStreet());
 
-		Profile profile = new Profile(1L, "Bio", "09164547960", LocalDate.now(), 100);
-		System.out.println(profile.getLoyaltyPoints());
+		user.addAddress(address);
+		System.out.println(user);
 
-		Tag tags = new Tag(1L, "human");
-		System.out.println(tags.getName());
+//		Profile profile = new Profile(1L, "Bio", "09164547960", LocalDate.now(), 100);
+//		System.out.println(profile.getLoyaltyPoints());
+//
+//		Tag tags = new Tag(1L, "human");
+//		System.out.println(tags.getName());
 	}
 }

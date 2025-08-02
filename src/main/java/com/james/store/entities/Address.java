@@ -1,10 +1,7 @@
 package com.james.store.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -12,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "addresses")
+@ToString
 public class Address {
     @Id
     @Column(name = "id")
@@ -27,6 +25,8 @@ public class Address {
     @Column(nullable = false, name = "zip")
     private String zip;
 
-    @Column(nullable = false, name = "user_id")
-    private String userId;
+    @ManyToOne()
+    @ToString.Exclude
+    @JoinColumn(name = "user_id")
+    private User user;
 }
