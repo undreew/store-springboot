@@ -1,0 +1,16 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: store
+    paymentService: paypal
+  datasource:
+    url: jdbc:mysql://localhost:3306/store?createDatabaseIfNotExist=true
+    username: root
+    password: pass1234
+stripe:
+  apiUrl: http://stripe.api.url
+  enabled: true
+  timeout: 1000
+  supported-currencies: USD,EUR,GBP,PHP
+
