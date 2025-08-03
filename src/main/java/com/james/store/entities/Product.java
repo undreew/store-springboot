@@ -9,20 +9,19 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Table(name = "products")
-@ToString
 public class Product {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
 
     @ManyToOne
-    @ToString.Exclude
     @JoinColumn(name = "category_id")
     private Category category;
 }
