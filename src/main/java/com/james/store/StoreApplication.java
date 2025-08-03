@@ -5,6 +5,7 @@ import com.james.store.entities.Profile;
 import com.james.store.entities.Tag;
 import com.james.store.entities.User;
 import com.james.store.repositories.UserRepository;
+import com.james.store.services.ProductService;
 import com.james.store.services.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
@@ -19,8 +20,8 @@ public class StoreApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(StoreApplication.class, args);
-		var rep = ctx.getBean(UserService.class);
+		var rep = ctx.getBean(ProductService.class);
 
-//		rep.deleteRelated();
+		rep.deleteProduct();
 	}
 }

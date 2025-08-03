@@ -52,4 +52,10 @@ public class UserService {
     public void deleteRelated() {
         userRepository.deleteById(9L);
     }
+
+    @Transactional
+    public void fetchUserWithAddress() {
+        var user = userRepository.findById(2L).orElseThrow();
+        System.out.println(user);
+    }
 }

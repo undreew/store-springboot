@@ -40,7 +40,7 @@ public class User {
     )
     private Set<Tag> tags = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "wishlist",
             joinColumns = @JoinColumn(name = "user_id"),
