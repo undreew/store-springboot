@@ -52,8 +52,7 @@ public class User {
     private Profile profile;
 
     // solution to prevent the args error of missing address
-    public User(Long id, String name, String email, String password) {
-        this.id = id;
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
