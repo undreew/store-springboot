@@ -1,6 +1,7 @@
 package com.james.store.services;
 
 import com.james.store.entities.User;
+import com.james.store.repositories.AddressRepository;
 import com.james.store.repositories.ProfileRepository;
 import com.james.store.repositories.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
     private final ProfileRepository profileRepository;
+    private final AddressRepository addressRepository;
     private final UserRepository userRepository;
     private final EntityManager entityManager;
 
@@ -32,5 +34,9 @@ public class UserService {
     public void showRelatedEntities() {
         var profile = profileRepository.findById(2L).orElseThrow();
         System.out.println(profile.getUser().getEmail());
+    }
+
+    public void fetchAddress() {
+        var address = addressRepository.findById(1L).orElseThrow();
     }
 }
