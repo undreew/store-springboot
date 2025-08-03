@@ -1,5 +1,6 @@
 package com.james.store.services;
 
+import com.james.store.entities.Address;
 import com.james.store.entities.User;
 import com.james.store.repositories.AddressRepository;
 import com.james.store.repositories.ProfileRepository;
@@ -38,5 +39,13 @@ public class UserService {
 
     public void fetchAddress() {
         var address = addressRepository.findById(1L).orElseThrow();
+    }
+
+    public void persistRelated() {
+        var user = new User("User1", "user1@email.com", "123123");
+        var address = new Address("Elmo", "Manila", "3018");
+
+        user.addAddress(address);
+        userRepository.save(user);
     }
 }

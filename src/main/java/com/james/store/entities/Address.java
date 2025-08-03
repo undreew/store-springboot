@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Table(name = "addresses")
 @ToString
 public class Address {
@@ -29,4 +29,10 @@ public class Address {
     @ToString.Exclude
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Address(String street, String city, String zip) {
+        this.street = street;
+        this.city = city;
+        this.zip = zip;
+    }
 }
