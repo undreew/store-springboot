@@ -58,4 +58,8 @@ public class ProductService {
     public void updateProductByCategory() {
         productRepository.updatePriceByCategory(BigDecimal.valueOf(10.99), (byte) 4);
     }
+
+    public void fetchProducts() {
+        var products = productRepository.findByCategory(new Category((byte) 1));
+    }
 }

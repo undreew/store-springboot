@@ -22,6 +22,6 @@ public class StoreApplication {
 		ApplicationContext ctx = SpringApplication.run(StoreApplication.class, args);
 		var rep = ctx.getBean(ProductService.class);
 
-		rep.updateProductByCategory();
+		rep.fetchProducts();
 	}
 }
