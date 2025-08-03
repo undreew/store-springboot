@@ -53,4 +53,9 @@ public class ProductService {
     public void deleteProduct() {
         productRepository.deleteById(5L);
     }
+
+    @Transactional
+    public void updateProductByCategory() {
+        productRepository.updatePriceByCategory(BigDecimal.valueOf(10.99), (byte) 4);
+    }
 }
