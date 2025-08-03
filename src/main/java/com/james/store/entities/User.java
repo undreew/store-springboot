@@ -40,6 +40,9 @@ public class User {
     )
     private Set<Tag> tags = new HashSet<>();
 
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
+
     // solution to prevent the args error of missing address
     public User(Long id, String name, String email, String password) {
         this.id = id;
@@ -62,5 +65,10 @@ public class User {
         Tag createdTag = new Tag(tag);
         tags.add(createdTag);
         createdTag.getUsers().add(this);
+    }
+
+    public void createProfile (Profile profile) {
+        this.setProfile(profile);
+        profile.setUser(this);
     }
 }

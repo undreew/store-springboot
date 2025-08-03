@@ -18,8 +18,11 @@ public class StoreApplication {
 //		SpringApplication.run(StoreApplication.class, args);
 		User user = new User(1L, "james", "james@gmail.com", "123123");
 
-		user.addTag("Tag1");
+		Profile profile = Profile.builder().bio("Bio").build();
+
+		user.createProfile(profile);
 		System.out.println(user);
+		System.out.println(user.getProfile().getUser().getName());
 
 //		Address address = new Address(2L, "Elmo Street", "City", "Zip", user);
 //		System.out.println(address.getStreet());

@@ -1,22 +1,18 @@
 package com.james.store.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
+//@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "profiles")
+@ToString
 public class Profile {
     @Id
     @Column(name = "id")
@@ -33,4 +29,10 @@ public class Profile {
 
     @Column(name = "loyalty_points")
     private Integer loyaltyPoints;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    @MapsId // this allows to set the column as PK and FK
+    @ToString.Exclude
+    private User user;
 }
