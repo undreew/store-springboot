@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "profiles")
 @ToString
@@ -30,7 +30,7 @@ public class Profile {
     @Column(name = "loyalty_points")
     private Integer loyaltyPoints;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId // this allows to set the column as PK and FK
     @ToString.Exclude
