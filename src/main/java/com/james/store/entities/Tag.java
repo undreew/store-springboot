@@ -1,10 +1,10 @@
 package com.james.store.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tags")
+@ToString
 public class Tag {
     @Id
     @Column(name = "id")
@@ -20,4 +21,13 @@ public class Tag {
 
     @Column(nullable = false, name = "name")
     private String name;
+
+    @ManyToMany(mappedBy = "tags")
+    @ToString.Exclude
+    private Set<User> users = new HashSet<>();
+
+
+    public Tag(String name) {
+        this.name = name;
+    }
 }
