@@ -29,7 +29,7 @@ public class User {
     @Column(nullable = false, name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Address> addresses = new ArrayList<>();
 
     @ManyToMany
@@ -48,7 +48,7 @@ public class User {
     )
     private Set<Product> wishlist = new HashSet<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Profile profile;
 
     // solution to prevent the args error of missing address
