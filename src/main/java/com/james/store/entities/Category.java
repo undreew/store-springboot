@@ -10,7 +10,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "categories")
-@ToString
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +19,5 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private Set<Address> addresses = new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 }
