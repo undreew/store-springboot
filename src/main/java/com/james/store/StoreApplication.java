@@ -23,6 +23,6 @@ public class StoreApplication {
 		ApplicationContext ctx = SpringApplication.run(StoreApplication.class, args);
 		var rep = ctx.getBean(ProductService.class);
 
-		rep.fetchProductsByCriteria();
+		rep.fetchProductsBySpecs("Product1", null, null );
 	}
 }
