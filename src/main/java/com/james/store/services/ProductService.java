@@ -62,4 +62,9 @@ public class ProductService {
     public void fetchProducts() {
         var products = productRepository.findByCategory(new Category((byte) 1));
     }
+
+    public void fetchProductsByCriteria() {
+        var products = productRepository.fetchProductsByCriteria("Product1", BigDecimal.valueOf(1), null);
+        products.forEach(System.out::println);
+    }
 }

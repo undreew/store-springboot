@@ -21,8 +21,8 @@ public class StoreApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(StoreApplication.class, args);
-		var rep = ctx.getBean(ProfileService.class);
+		var rep = ctx.getBean(ProductService.class);
 
-		rep.findLoyalProfiles();
+		rep.fetchProductsByCriteria();
 	}
 }
