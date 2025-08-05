@@ -58,4 +58,10 @@ public class UserService {
         var user = userRepository.findById(2L).orElseThrow();
         System.out.println(user);
     }
+
+    @Transactional
+    public void fetchUser(){
+        var user = userRepository.findByEmail("james@gmail.com").orElseThrow();
+        System.out.println(user);
+    }
 }

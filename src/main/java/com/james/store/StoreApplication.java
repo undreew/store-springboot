@@ -20,8 +20,8 @@ public class StoreApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(StoreApplication.class, args);
-		var rep = ctx.getBean(ProductService.class);
+		var rep = ctx.getBean(UserService.class);
 
-		rep.fetchProducts();
+		rep.fetchUser();
 	}
 }
