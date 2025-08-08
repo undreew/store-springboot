@@ -1,10 +1,9 @@
 package com.james.store.controllers;
 
 import com.james.store.dtos.UserDto;
-import com.james.store.entities.User;
+import com.james.store.mappers.UserMapper;
 import com.james.store.repositories.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @GetMapping
     public Iterable<UserDto> getAllUsers() {
-        return userRepository.findAll().stream().map(u -> new UserDto(u.getId(), u.getName(), u.getEmail())).toList();
+        return userRepository.findAll().stream().map(userMapper::toDto).toList();
     }
 
     @GetMapping("/{id}")
@@ -32,6 +32,6 @@ public class UserController {
         }
 
         var userDto = new UserDto(user.getId(), user.getName(), user.getEmail());
-        return ResponseEntity.ok(userDto);
+        return ResponseEntity.ok(userMapper.toDto(user));
     }
 }
