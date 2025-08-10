@@ -1,5 +1,6 @@
 package com.james.store.controllers;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.data.domain.Sort;
@@ -55,12 +56,20 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(@Valid @RequestBody RegisterUserRequest payload) {
-        var user = userMapper.toEntity(payload);
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest request) {
+        /**
+         * validate business rules
+         * email must be unique
+         * **/ 
+        if (userRepository.existsByEmail(request.getEmail())) {
+            return ResponseEntity.badRequest().body(Map.of("email", "Email is already registered."));
+        }
+
+        var user = userMapper.toEntity(request);
         userRepository.save(user);
 
         var userDto = userMapper.toDto(user);
-        return userDto;
+        return ResponseEntity.ok(userDto);
     }
     
     @PutMapping("/{id}")
