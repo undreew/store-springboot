@@ -1,5 +1,6 @@
 package com.james.store.controllers;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -81,7 +82,7 @@ public class CartController {
   }
   
   @PutMapping("/{cartId}/items/{productId}")
-  public ResponseEntity<CartItemDto> updateCartItem(
+  public ResponseEntity<?> updateCartItem(
     @PathVariable(name = "cartId") UUID cartId,
     @PathVariable(name = "productId") Long productId,
     @Valid @RequestBody UpdateCartItemDto request
@@ -89,12 +90,12 @@ public class CartController {
     var cart = cartRepository.findById(cartId).orElse(null);
     var product = productRepository.findById(productId).orElse(null);
 
-    if (cart == null || product == null) return ResponseEntity.notFound().build();
+    if (cart == null || product == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Invalid cart or product"));
     if ((request.getQuantity() < 1 || request.getQuantity() > 100)) return ResponseEntity.badRequest().build();
     
     var cartItem = cart.getCartItems().stream().filter(item -> item.getProduct().getId().equals(productId)).findFirst().orElse(null);
 
-    if (cartItem == null) return ResponseEntity.notFound().build();
+    if (cartItem == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Product not found in cart"));
     
     cartItem.setQuantity(request.getQuantity());
     cartRepository.save(cart);
@@ -103,12 +104,12 @@ public class CartController {
   }
 
   @DeleteMapping("/{cartId}/items/{productId}")
-  public ResponseEntity<Void> removeProductFromCart(
+  public ResponseEntity<?> removeProductFromCart(
     @PathVariable(name = "cartId") UUID cartId,
     @PathVariable(name = "productId") Long productId
   ) {
     var cart = cartRepository.findById(cartId).orElse(null);
-    if (cart == null) return ResponseEntity.notFound().build();
+    if (cart == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Cart not found"));
 
     var cartItem = cart.getCartItems().stream().filter(item -> item.getProduct().getId().equals(productId)).findFirst().orElse(null);
     if (cartItem == null) return ResponseEntity.notFound().build();
