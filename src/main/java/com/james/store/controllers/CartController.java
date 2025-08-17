@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +20,12 @@ import com.james.store.dtos.AddItemToCartRequest;
 import com.james.store.dtos.CartDto;
 import com.james.store.dtos.CartItemDto;
 import com.james.store.dtos.UpdateCartItemDto;
-import com.james.store.entities.Cart;
 import com.james.store.entities.CartItem;
+import com.james.store.exceptions.CartNotFoundException;
 import com.james.store.mappers.CartMapper;
 import com.james.store.repositories.CartRepository;
 import com.james.store.repositories.ProductRepository;
+import com.james.store.services.CartService;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -35,14 +37,14 @@ public class CartController {
 
   private final ProductRepository productRepository;
   private final CartRepository cartRepository;
+  private final CartService cartService;
   private final CartMapper cartMapper;
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<CartDto> createCart() {
-    var cart = new Cart();
-    cartRepository.save(cart);
-    return ResponseEntity.ok(cartMapper.toDto(cart));
+    var cart = cartService.createCart();
+    return ResponseEntity.ok(cart);
   }
   
   @PostMapping("/{cartId}/items")
@@ -133,4 +135,9 @@ public class CartController {
     return ResponseEntity.noContent().build();
   }
   
+  @ExceptionHandler(CartNotFoundException.class)
+  public ResponseEntity<Map<String, String>> handleCartNotFound() {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map<"error", "Cart Not Found">)
+  }
+
 }
