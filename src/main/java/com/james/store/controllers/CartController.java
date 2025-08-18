@@ -78,9 +78,8 @@ public class CartController {
   @GetMapping("/{cartId}")
   @ResponseStatus(HttpStatus.OK)
   public ResponseEntity<CartDto> getCart(@PathVariable(name = "cartId") UUID cartId) {
-    var cart = cartRepository.findById(cartId).orElse(null);
-    if (cart == null) return ResponseEntity.notFound().build();
-    return ResponseEntity.ok(cartMapper.toDto(cart));
+    var cartDto = cartService.getCart(cartId);
+    return ResponseEntity.ok(cartDto);
   }
   
   @PutMapping("/{cartId}/items/{productId}")
@@ -137,7 +136,7 @@ public class CartController {
   
   @ExceptionHandler(CartNotFoundException.class)
   public ResponseEntity<Map<String, String>> handleCartNotFound() {
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map<"error", "Cart Not Found">)
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Cart not found"));
   }
 
 }
