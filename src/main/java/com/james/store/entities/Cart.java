@@ -31,6 +31,8 @@ public class Cart {
   @Column(name = "date_created", insertable = false, updatable = false)
   private LocalDate dateCreated;
 
+  // cascase merge allows to update an existing record by updating the cart items
+  // orphanRemoval allows to delete cart item records when they are removed from the cart
   @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE, orphanRemoval = true)
   private Set<CartItem> cartItems = new LinkedHashSet<>();
 
@@ -44,4 +46,38 @@ public class Cart {
 
     return totalPrice;
   }
+
+  public CartItem getItem(Long productId) {
+    return cartItems.stream()
+        .filter(item -> item.getProduct().getId().equals(productId))
+        .findFirst()
+        .orElse(null);
+  }
+
+  public CartItem addItem(Product product) {
+    var cartItem = getItem(product.getId());
+    if (cartItem != null) {
+      cartItem.setQuantity(cartItem.getQuantity() + 1);
+    } else {
+      cartItem = new CartItem();
+      cartItem.setProduct(product);
+      cartItem.setQuantity(1);
+      cartItem.setCart(this);
+      cartItems.add(cartItem);
+    }
+    return cartItem;
+  }
+
+  public void removeItem(Long productId) {
+    var cartItem = getItem(productId);
+    if (cartItem != null) {
+      cartItems.remove(cartItem);
+      cartItem.setCart(null); // clear the cart reference
+    }
+  }
+
+  public void clearCart() {
+    cartItems.clear();
+  }
+
 }
